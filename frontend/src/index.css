@@ -1,0 +1,228 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================
+   Global Layout
+============================= */
+html,
+body,
+#root {
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply antialiased transition-all duration-500 ease-in-out;
+}
+
+/* =============================
+   Theme Defaults
+============================= */
+body {
+  @apply bg-white text-gray-900;
+}
+
+.dark body {
+  @apply bg-black text-white;
+}
+
+/* =============================
+   Smooth Global Transitions
+============================= */
+* {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* =============================
+   Animated Gradient Mesh
+============================= */
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.mesh-light {
+  background: linear-gradient(
+    -45deg,
+    #e0f7e9,
+    #fff7ed,
+    #f0fdf4,
+    #ffedd5
+  );
+  background-size: 400% 400%;
+  animation: gradientMove 15s ease infinite;
+}
+
+.mesh-dark {
+  background: linear-gradient(
+    -45deg,
+    #0f172a,
+    #111827,
+    #1e293b,
+    #0c4a6e
+  );
+  background-size: 400% 400%;
+  animation: gradientMove 20s ease infinite;
+}
+
+/* =============================
+   Floating Glow Blobs
+============================= */
+@keyframes floatSlow {
+  0% { transform: translate(0px, 0px); }
+  50% { transform: translate(40px, -40px); }
+  100% { transform: translate(0px, 0px); }
+}
+
+.blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(100px);
+  opacity: 0.3;
+  animation: floatSlow 18s ease-in-out infinite;
+}
+
+.blob-green {
+  background: #22c55e;
+}
+
+.blob-orange {
+  background: #f97316;
+}
+
+.blob-blue {
+  background: #3b82f6;
+}
+
+/* =============================
+   Glass Effect (Refined)
+============================= */
+.glass {
+  backdrop-filter: blur(25px);
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.dark .glass {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+/* =============================
+   Floating Animation
+============================= */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* =============================
+   Fade + Slide Reveal
+============================= */
+.reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =============================
+   Premium Glow Button
+============================= */
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(16, 185, 129, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+  }
+}
+
+.glow-button {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+/* =============================
+   Gradient Text Utility
+============================= */
+.gradient-text {
+  background: linear-gradient(to right, #22c55e, #f97316);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* =============================
+   Workflow Cards
+============================= */
+.workflow-card {
+  padding: 2rem 3rem;
+  border-radius: 1.5rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.85);
+  color: #111827;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  transition: all 0.4s ease;
+}
+
+.workflow-card:hover {
+  transform: translateY(-6px) scale(1.05);
+}
+
+.dark .workflow-card {
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* =============================
+   Premium Image Hover
+============================= */
+.premium-img {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.premium-img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+}
+
+/* =============================
+   Subtle Noise Overlay (Premium Feel)
+============================= */
+.noise::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("https://www.transparenttextures.com/patterns/asfalt-light.png");
+  opacity: 0.04;
+  pointer-events: none;
+}
+
+/* =============================
+   Section Layering
+============================= */
+section {
+  position: relative;
+  z-index: 10;
+}
