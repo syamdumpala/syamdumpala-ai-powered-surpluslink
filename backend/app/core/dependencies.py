@@ -2,16 +2,9 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from sqlalchemy.orm import Session
-from dotenv import load_dotenv
-import os
-
 from app.database import get_db
 from app.models.user import User
-
-load_dotenv()
-
-SECRET_KEY = os.getenv("SECRET_KEY")
-ALGORITHM = os.getenv("ALGORITHM")
+from app.config import ALGORITHM, SECRET_KEY
 
 # OAuth2 scheme (used in Swagger Authorize)
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")

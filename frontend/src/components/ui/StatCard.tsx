@@ -1,7 +1,9 @@
+import type { ReactNode } from "react";
+
 interface Props {
   title: string;
   value: string;
-  icon?: React.ReactNode;
+  icon?: ReactNode;
 }
 
 const StatCard = ({ title, value, icon }: Props) => {

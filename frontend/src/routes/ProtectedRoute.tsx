@@ -1,9 +1,11 @@
 import { Navigate } from "react-router-dom";
+import type { ReactNode } from "react";
+import type { Role } from "../context/AuthContext";
 import { useAuth } from "../context/AuthContext";
 
 type Props = {
-  children: JSX.Element;
-  allowedRole: "restaurant" | "volunteer" | "ngo" | "admin";
+  children: ReactNode;
+  allowedRole: Role;
 };
 
 export default function ProtectedRoute({ children, allowedRole }: Props) {
@@ -14,8 +16,8 @@ export default function ProtectedRoute({ children, allowedRole }: Props) {
   }
 
   if (role !== allowedRole) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/dashboard" replace />;
   }
 
-  return children;
+  return <>{children}</>;
 }

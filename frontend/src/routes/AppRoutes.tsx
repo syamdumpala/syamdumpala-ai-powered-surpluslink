@@ -1,61 +1,39 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useMemo } from "react";
 
 import Home from "../pages/home/Home";
 import Login from "../pages/auth/Login";
-
-// Dashboards
 import RestaurantDashboard from "../pages/restaurant/RestaurantDashboard";
 import VolunteerDashboard from "../pages/volunteer/VolunteerDashboard";
 import NGODashboard from "../pages/ngo/NGODashboard";
 import AdminDashboard from "../pages/admin/AdminDashboard";
-
+import { useAuth } from "../context/AuthContext";
 import ProtectedRoute from "./ProtectedRoute";
 
+const dashboardRoutes = {
+  restaurant: "/restaurant",
+  volunteer: "/volunteer",
+  ngo: "/ngo",
+  admin: "/admin",
+};
+
 export default function AppRoutes() {
-  // 🔥 Centralized auth state
-  const auth = useMemo(() => {
-    return {
-      token: localStorage.getItem("token"),
-      role: localStorage.getItem("role"),
-    };
-  }, []);
+  const { isAuthenticated, role, logout } = useAuth();
 
-  // 🔥 Role-based redirect
   const getDashboardRoute = () => {
-    if (!auth.token) return "/login";
-
-    const routes: Record<string, string> = {
-      restaurant: "/restaurant",
-      volunteer: "/volunteer",
-      ngo: "/ngo",
-      admin: "/admin",
-    };
-
-    return routes[auth.role || ""] || "/";
+    if (!isAuthenticated || !role) return "/login";
+    return dashboardRoutes[role];
   };
 
   return (
     <Routes>
-
-      {/* ================= PUBLIC ================= */}
       <Route path="/" element={<Home />} />
-
       <Route
         path="/login"
         element={
-          auth.token ? <Navigate to={getDashboardRoute()} replace /> : <Login />
+          isAuthenticated ? <Navigate to={getDashboardRoute()} replace /> : <Login />
         }
       />
-
-      {/* ================= SMART REDIRECT ================= */}
-      <Route
-        path="/dashboard"
-        element={<Navigate to={getDashboardRoute()} replace />}
-      />
-
-      {/* ================= PROTECTED ================= */}
-
+      <Route path="/dashboard" element={<Navigate to={getDashboardRoute()} replace />} />
       <Route
         path="/restaurant"
         element={
@@ -64,7 +42,6 @@ export default function AppRoutes() {
           </ProtectedRoute>
         }
       />
-
       <Route
         path="/volunteer"
         element={
@@ -73,7 +50,6 @@ export default function AppRoutes() {
           </ProtectedRoute>
         }
       />
-
       <Route
         path="/ngo"
         element={
@@ -82,7 +58,6 @@ export default function AppRoutes() {
           </ProtectedRoute>
         }
       />
-
       <Route
         path="/admin"
         element={
@@ -91,42 +66,33 @@ export default function AppRoutes() {
           </ProtectedRoute>
         }
       />
-
-      {/* ================= LOGOUT ================= */}
-      <Route path="/logout" element={<Logout />} />
-
-      {/* ================= 404 ================= */}
+      <Route
+        path="/logout"
+        element={
+          <Logout
+            onLogout={() => {
+              logout();
+            }}
+          />
+        }
+      />
       <Route path="*" element={<NotFound />} />
-
     </Routes>
   );
 }
 
-//
-// 🔥 LOGOUT COMPONENT (clean way)
-//
-function Logout() {
-  localStorage.clear();
+function Logout({ onLogout }: { onLogout: () => void }) {
+  onLogout();
   return <Navigate to="/login" replace />;
 }
 
-//
-// 🔥 404 PAGE (better UX)
-//
 function NotFound() {
   return (
-    <div className="h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-black">
-      <h1 className="text-5xl font-bold text-gray-700 dark:text-white mb-4">
-        404 🚫
-      </h1>
-      <p className="text-gray-500 dark:text-gray-400 mb-6">
-        Page not found
-      </p>
-      <a
-        href="/"
-        className="px-6 py-3 bg-green-500 text-white rounded-xl"
-      >
-        Go Home
+    <div className="flex min-h-screen flex-col items-center justify-center bg-slate-50 px-6 text-center text-slate-900 dark:bg-slate-950 dark:text-white">
+      <h1 className="mb-3 text-5xl font-bold">404</h1>
+      <p className="mb-6 text-slate-500 dark:text-slate-400">Page not found</p>
+      <a className="rounded-md bg-emerald-600 px-5 py-3 font-semibold text-white" href="/">
+        Go home
       </a>
     </div>
   );
