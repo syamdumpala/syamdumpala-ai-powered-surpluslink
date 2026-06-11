@@ -1,11 +1,11 @@
-🍽️ SurplusLink – Smart Food Redistribution Platform
+                                      🍽️ SurplusLink – Smart Food Redistribution Platform
 📌 Overview
 
 SurplusLink is an AI-powered food redistribution platform designed to reduce food waste and combat hunger by connecting restaurants, hotels, caterers, NGOs, and volunteers in real time.
 
 The platform enables surplus food donors to quickly list available food while NGOs and volunteers coordinate collection and delivery to people in need.
 
-🚀 Problem Statement
+ Problem Statement
 
 Millions of tons of edible food are wasted every year while many people struggle with food insecurity.
 
